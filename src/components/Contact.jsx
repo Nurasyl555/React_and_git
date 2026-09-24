@@ -3,9 +3,9 @@ function Contact() {
     <section className="section contact">
       <h2>Контакты</h2>
       <ul className="contact-list">
-        <li><strong>GitHub:</strong> <a href="https://github.com/yourusername" target="_blank" rel="noreferrer">github.com/yourusername</a></li>
-        <li><strong>Instagram:</strong> @your_handle</li>
-        <li><strong>Локация:</strong> Планета Земля 🌍</li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/Nothing" target="_blank" rel="noreferrer">github.com/Nothing</a></li>
+        <li><strong>Instagram:</strong> @John_Snow</li>
+        <li><strong>location:</strong> Винтерфелл</li>
       </ul>
     </section>
   );

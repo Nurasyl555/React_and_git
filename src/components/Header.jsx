@@ -6,7 +6,7 @@ function Header() {
         alt="Profile" 
         className="profile-img" 
       />
-      <h1>Привет, я [Ваше Имя]!</h1>
+      <h1> I'm paul atreides !</h1>
       <p className="subtitle">Full-Stack Developer / Student</p>
     </header>
   );
