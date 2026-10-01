@@ -1,26 +1,77 @@
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.container {
-  max-width: 600px;
+/* ==========================================================================
+   КОНТЕЙНЕР ПОРТФОЛИО (GLASSMORPHISM КАРТОЧКА)
+   ========================================================================== */
+.portfolio-card {
+  max-width: 640px;
   width: 100%;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Верхняя панель управления (переключатель темы) */
+.card-topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.theme-toggle-btn {
+  background: var(--btn-toggle-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   КОМПОНЕНТ HEADER (ШАПКА И АВАТАРКА)
+   ========================================================================== */
 .header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #eaeaea;
+  position: relative;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-bottom: 16px;
 }
 
 .profile-img {
@@ -28,40 +79,311 @@ body {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 15px;
-  border: 3px solid #007bff;
+  display: block;
+  padding: 3px;
+  background: linear-gradient(135deg, #6366f1, #38bdf8, #ec4899);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.06) rotate(1deg);
+  box-shadow: 0 14px 32px rgba(99, 102, 241, 0.55);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--success);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--success);
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.header h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Для светлой темы делаем градиент темным */
+[data-theme='light'] .header h1 {
+  background: linear-gradient(135deg, #0f172a 0%, #334155 50%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-  color: #666;
-  font-style: italic;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
+/* Интерактивная кнопка лайка (демонстрация хука useState) */
+.like-btn {
+  margin-top: 14px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.like-btn:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ
+   ========================================================================== */
 .section {
-  margin-top: 25px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--divider);
 }
 
-.section h2 {
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
-  display: inline-block;
-  padding-bottom: 4px;
+.section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 10px;
 }
 
-.contact-list {
-  list-style-type: none;
-  padding: 0;
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.contact-list li {
+.title-icon {
+  font-size: 1.25rem;
+}
+
+/* ==========================================================================
+   КОМПОНЕНТ ABOUT (О СЕБЕ)
+   ========================================================================== */
+.bio-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.subsection-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
-a {
-  color: #007bff;
-  text-decoration: none;
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-a:hover {
-  text-decoration: underline;
+.skill-tag {
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  user-select: none;
+  cursor: default;
+}
+
+.skill-tag:hover {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.hobbies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hobby-item {
+  background: var(--item-bg);
+  border: 1px solid var(--item-border);
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hobby-item:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   КОМПОНЕНТ CONTACT (КОНТАКТЫ)
+   ========================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 520px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-card {
+  background: var(--item-bg);
+  border: 1px solid var(--item-border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-card:hover {
+  background: var(--item-hover-bg);
+  border-color: rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.contact-icon {
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: left;
+}
+
+.contact-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.contact-value {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.contact-card:hover .contact-value {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   ФУТЕР КАРТОЧКИ
+   ========================================================================== */
+.card-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-footer span {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   АДАПТИВНОСТЬ (МОБИЛЬНЫЕ УСТРОЙСТВА)
+   ========================================================================== */
+@media (max-width: 500px) {
+  .portfolio-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .header h1 {
+    font-size: 1.7rem;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
 }
